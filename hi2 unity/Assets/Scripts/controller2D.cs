@@ -35,6 +35,8 @@ public class controller2D : MonoBehaviour
         //1.決定圖示顏色
         Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
         //2.決定繪製圖形
+        //transform.position 此物件的世界座標
+        //transform.TranformDirection()根據變形元件的區域座標轉換為世界座標
         Gizmos.DrawSphere(transform.position + 
             transform.TransformDirection(checkGroundOffset), checkGroundRadius);
     }
@@ -102,6 +104,12 @@ public class controller2D : MonoBehaviour
         {
             transform.eulerAngles = Vector3.zero; 
         }
+     ///<summary>
+     ///檢查是否在地板
+     /// </summary>
+     
+     
+        
     }
     #endregion
 }

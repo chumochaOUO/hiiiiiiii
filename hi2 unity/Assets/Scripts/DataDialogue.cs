@@ -10,15 +10,7 @@ using UnityEngine;
 /// Scriptable Object 竲セてン盢祘Α戈纗
 public class DataDialogue : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Text Area (程︽计程︽计) - 度 string
+    [Header("癸杠ず甧"), TextArea(3, 5)]
+    public string[] dialogus; 
 }
