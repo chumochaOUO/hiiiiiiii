@@ -9,6 +9,7 @@ using System.Collections;
 
 public class DialogueSystem : MonoBehaviour
 {
+    #region 欄位：公開
     [Header("對話間隔"), Range(0, 1)]
     public float interval = 0.3f;
     //interval=打字文字時間
@@ -16,6 +17,11 @@ public class DialogueSystem : MonoBehaviour
     public GameObject goDialogue;
     [Header("對話內容")]
     public Text textContent;
+    [Header("對話完成圖示")]
+    public GameObject goTip;
+    [Header("對話按鍵")]
+    public KeyCode keyDialoge = KeyCode.Mouse0;
+    #endregion
 
     private void Start()
     {
@@ -24,15 +30,28 @@ public class DialogueSystem : MonoBehaviour
 
     private IEnumerator TypeEffect()
     {
-        string test = "哈囉，你好~";
+        string test1 = "哈囉，你好~";
+        string test2 = "對話第二段~";
 
-        textContent.text = "";              //清除上次對話內容
-        goDialogue.SetActive(true);         //顯示對話物件
-
-        for (int i = 0;i < test.Length; i++)
+        string[] test = { test1, test2 };
+        
+        textContent.text = "";                          //清除上次對話內容
+        goDialogue.SetActive(true);                     //顯示對話物件
+        
+        for (int j = 0; j < test.Length; j++)          //遍尋所有對話
         {
-            textContent.text += (test[i]);  //疊加對話內容文字介面
-            yield return new WaitForSeconds(interval);
+            for (int i = 0; i < test[j].Length; i++)    //遍尋對話的每一個字
+            {
+                textContent.text += test[j][i];       //疊加對話內容文字介面
+                yield return new WaitForSeconds(interval);
+            }
+        }
+
+        goTip.SetActive(true);
+
+        while (!Input.GetKeyDown(keyDialoge))
+        {
+            yield return null;
         }
     }
 }

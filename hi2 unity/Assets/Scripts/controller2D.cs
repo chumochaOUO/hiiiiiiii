@@ -19,10 +19,13 @@ public class controller2D : MonoBehaviour
     [Header("跳躍按鍵與可跳躍圖層")]
     public KeyCode keyjump = KeyCode.Space;
     public LayerMask canJumpLayer;
-
+    [Header("動畫參數：走路與跳躍")]
+    public string parameterWalk = "開關走路";
+    public string parameterJump = "開關跳躍";
     #endregion
 
     #region 欄位：私人
+    private Animator ani;
     /// <summary>
     /// 剛體元件 Rigidbody 2D
     /// </summary>
@@ -60,7 +63,8 @@ public class controller2D : MonoBehaviour
     private void Start()
     {
         //剛體欄位 = 取得元件<2D 剛體>()
-         rig = GetComponent<Rigidbody2D>(); 
+        rig = GetComponent<Rigidbody2D>();
+        ani = GetComponent<Animator>();
     }
 
     ///<summary>
@@ -95,6 +99,9 @@ public class controller2D : MonoBehaviour
 
         //剛體元件(rig).加速度 = 新 二維向量(h 值 * 移動速度, 剛體.加速度.垂直)
         rig.velocity = new Vector2(h * speed, rig.velocity.y);
+
+        //當 水平值 不等於零 勾選 走路參數
+        ani.SetBool(parameterWalk, h != 0);
     }
 
     ///<summary>
