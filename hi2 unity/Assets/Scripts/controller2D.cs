@@ -64,7 +64,8 @@ public class controller2D : MonoBehaviour
 
     private void Update()
     {
-        Flip(); 
+        Flip();
+        CheckGround();
     }
     #endregion
     #region 方法
@@ -77,7 +78,7 @@ public class controller2D : MonoBehaviour
     {
         //h 值 指定為 輸入.取得軸向(水平軸) - 水平軸代表左右鍵與 AD
         float h = Input.GetAxis("Horizontal");
-        print("玩家左右按鍵值" + h);
+        //print("玩家左右按鍵值" + h);
 
         //剛體元件(rig).加速度 = 新 二維向量(h 值 * 移動速度, 剛體.加速度.垂直)
         rig.velocity = new Vector2(h * speed, rig.velocity.y);
@@ -110,6 +111,18 @@ public class controller2D : MonoBehaviour
      
      
         
+    }
+    
+
+    ///<summary>
+    ///檢查是否在地板
+    /// </summary>
+    private void CheckGround()
+    {
+        //碰撞資訊 = 2D 物理.覆蓋圓形(中心點，半徑，圖層)
+        Collider2D hit = Physics2D.OverlapCircle(transform.position +
+            transform.TransformDirection(checkGroundOffset), checkGroundRadius, canJumpLayer);
+        print("碰到的物件名稱:" + hit.name);
     }
     #endregion
 }
