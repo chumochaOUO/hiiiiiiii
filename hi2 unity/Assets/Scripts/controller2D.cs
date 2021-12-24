@@ -20,10 +20,22 @@ public class controller2D : MonoBehaviour
     public KeyCode keyjump = KeyCode.Space;
     public LayerMask canJumpLayer;
 
-    //剛體元件
-    private Rigidbody2D rig;
     #endregion
 
+    #region 欄位：私人
+    /// <summary>
+    /// 剛體元件 Rigidbody 2D
+    /// </summary>
+    private Rigidbody2D rig;
+    //將私人欄位顯示在屬性面板上
+    [SerializeField]
+    ///<summary>
+    ///是否在地板上
+    ///</summary>
+    private bool isGrounded;
+    #endregion
+
+    #region 事件 Void
     /// <summary>
     /// 繪製圖示
     /// 在 Unity 繪製輔助用圖示
@@ -40,8 +52,7 @@ public class controller2D : MonoBehaviour
         Gizmos.DrawSphere(transform.position + 
             transform.TransformDirection(checkGroundOffset), checkGroundRadius);
     }
-
-    #region Void
+ 
     //void = 呼叫
     //Start 只會執行一次
     //public = 公開的，會出現在Unity的
@@ -66,8 +77,10 @@ public class controller2D : MonoBehaviour
     {
         Flip();
         CheckGround();
+        Jump();
     }
     #endregion
+
     #region 方法
     ///<summary>
     ///1.玩家是否有按移動按鍵，左右方向鍵或A、D
@@ -122,7 +135,20 @@ public class controller2D : MonoBehaviour
         //碰撞資訊 = 2D 物理.覆蓋圓形(中心點，半徑，圖層)
         Collider2D hit = Physics2D.OverlapCircle(transform.position +
             transform.TransformDirection(checkGroundOffset), checkGroundRadius, canJumpLayer);
-        print("碰到的物件名稱:" + hit.name);
+
+        //print("碰到的物件名稱:" + hit.name);
+
+        isGrounded = hit;
+    }
+
+    private void Jump()
+    {
+        //如果 在地板上 並且 按下指定鍵
+        if (isGrounded && Input.GetKeyDown(keyjump))
+        {
+            //剛體.添加推力(二維向量)
+            rig.AddForce(new Vector2(0, jump));
+        }
     }
     #endregion
 }
